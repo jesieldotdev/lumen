@@ -4,8 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <link rel="icon" href="icon.svg" type="image/svg+xml">
-<title>Lumen · Player IPTV grátis para Xtream Codes (Android, TV box, Windows, Linux)</title>
-<meta name="description" content="Lumen é um player IPTV grátis para listas Xtream Codes: canais ao vivo com guia de programação, filmes e séries com capa e continuar assistindo. Para celular Android, TV box, Windows e Linux.">
+<title>Lumen · Player IPTV grátis para Xtream Codes (Android, TV box, Windows, Linux, Switch)</title>
+<meta name="description" content="Lumen é um player IPTV grátis para listas Xtream Codes: canais ao vivo com guia de programação, filmes e séries com capa e continuar assistindo. Para celular Android, TV box, Windows, Linux e Nintendo Switch (homebrew).">
 <link rel="canonical" href="https://jesieldotdev.github.io/lumen/">
 <meta name="robots" content="index, follow">
 <meta name="theme-color" content="#0d1233">
@@ -14,7 +14,7 @@
 <meta property="og:locale" content="pt_BR">
 <meta property="og:site_name" content="Lumen">
 <meta property="og:title" content="Lumen · Player IPTV para Xtream Codes">
-<meta property="og:description" content="Lumen é um player IPTV grátis para listas Xtream Codes: canais ao vivo com guia de programação, filmes e séries com capa e continuar assistindo. Para celular Android, TV box, Windows e Linux.">
+<meta property="og:description" content="Lumen é um player IPTV grátis para listas Xtream Codes: canais ao vivo com guia de programação, filmes e séries com capa e continuar assistindo. Para celular Android, TV box, Windows, Linux e Nintendo Switch (homebrew).">
 <meta property="og:url" content="https://jesieldotdev.github.io/lumen/">
 <meta property="og:image" content="https://jesieldotdev.github.io/lumen/og.png">
 <meta property="og:image:width" content="1200">
@@ -22,7 +22,7 @@
 <meta property="og:image:alt" content="Lumen, player IPTV: sol nascente com o botão de play">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Lumen · Player IPTV para Xtream Codes">
-<meta name="twitter:description" content="Lumen é um player IPTV grátis para listas Xtream Codes: canais ao vivo com guia de programação, filmes e séries com capa e continuar assistindo. Para celular Android, TV box, Windows e Linux.">
+<meta name="twitter:description" content="Lumen é um player IPTV grátis para listas Xtream Codes: canais ao vivo com guia de programação, filmes e séries com capa e continuar assistindo. Para celular Android, TV box, Windows, Linux e Nintendo Switch (homebrew).">
 <meta name="twitter:image" content="https://jesieldotdev.github.io/lumen/og.png">
 <script type="application/ld+json">
 {
@@ -30,11 +30,11 @@
   "@type": "SoftwareApplication",
   "name": "Lumen",
   "alternateName": "Lumen IPTV",
-  "description": "Lumen é um player IPTV grátis para listas Xtream Codes: canais ao vivo com guia de programação, filmes e séries com capa e continuar assistindo. Para celular Android, TV box, Windows e Linux.",
+  "description": "Lumen é um player IPTV grátis para listas Xtream Codes: canais ao vivo com guia de programação, filmes e séries com capa e continuar assistindo. Para celular Android, TV box, Windows, Linux e Nintendo Switch (homebrew).",
   "url": "https://jesieldotdev.github.io/lumen/",
   "image": "https://jesieldotdev.github.io/lumen/og.png",
   "applicationCategory": "MultimediaApplication",
-  "operatingSystem": "Android 9+, Android TV, Windows 10+, Linux",
+  "operatingSystem": "Android 9+, Android TV, Windows 10+, Linux, Nintendo Switch (homebrew)",
   "softwareVersion": "0.2.3",
   "inLanguage": "pt-BR",
   "downloadUrl": "https://github.com/jesieldotdev/lumen/releases/latest",
@@ -156,6 +156,23 @@ kbd { display: inline-block; min-width: 1.9em; text-align: center; padding: 3px 
 footer { padding-block: 40px 56px; color: var(--muted); font-size: 0.9rem; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; border-top: 1px solid var(--line); }
 footer a { color: var(--ink); }
 
+/* telas */
+.shots { display: grid; gap: 18px; }
+.screen { margin: 0; border: 1px solid var(--line); border-radius: 18px; overflow: hidden; background: #000; box-shadow: 0 30px 80px -30px rgba(255, 79, 109, 0.35), 0 20px 50px -20px rgba(0, 0, 0, 0.8); }
+.screen img { display: block; width: 100%; height: auto; aspect-ratio: 1440 / 880; }
+.thumbs { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px; }
+.thumb { all: unset; cursor: pointer; display: grid; gap: 8px; min-width: 0; }
+.thumb img { display: block; width: 100%; aspect-ratio: 1440 / 880; border-radius: 10px; border: 1px solid var(--line); opacity: .55; transition: opacity .15s ease, border-color .15s ease; }
+.thumb span { font-size: 0.85rem; color: var(--muted); }
+.thumb:hover img { opacity: .85; }
+.thumb[aria-pressed="true"] img { opacity: 1; border-color: var(--sun); }
+.thumb[aria-pressed="true"] span { color: var(--ink); }
+.thumb:focus-visible img { outline: 2px solid var(--sun-hi); outline-offset: 3px; }
+.caption { color: var(--muted); font-size: 0.95rem; min-height: 1.6em; }
+.credit { color: var(--muted); font-size: 0.8rem; }
+.credit a { color: var(--muted); }
+@media (max-width: 560px) { .thumbs { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+
 @media (max-width: 860px) {
   .hero, .keys-grid { grid-template-columns: 1fr; }
   .sunbox { order: -1; width: min(70%, 320px); }
@@ -177,6 +194,7 @@ footer a { color: var(--ink); }
       Lumen
     </a>
     <nav aria-label="Seções">
+      <a href="#telas">Telas</a>
       <a href="#recursos">Recursos</a>
       <a href="#baixar">Baixar</a>
       <a href="#atalhos">Atalhos</a>
@@ -188,12 +206,12 @@ footer a { color: var(--ink); }
       <div>
         <p class="eyebrow">Player IPTV · Xtream Codes</p>
         <h1>Sua lista IPTV com cara de <em>streaming</em>.</h1>
-        <p class="lede">Canais ao vivo com guia de programação, filmes e séries com capa, sinopse e “continuar assistindo”. No celular, na TV box e no computador.</p>
+        <p class="lede">Canais ao vivo com guia de programação, filmes e séries com capa, sinopse e “continuar assistindo”. No celular, na TV box, no computador e no Switch.</p>
         <div class="cta">
           <a class="btn primary" href="#baixar">Baixar o Lumen</a>
           <a class="btn ghost" href="https://github.com/jesieldotdev/lumen/releases/latest" target="_blank" rel="noopener">Ver novidades</a>
         </div>
-        <p class="ver">v0.2.3 · Android 9+ · Windows 10+ · Linux x86_64</p>
+        <p class="ver">v0.2.3 · Android 9+ · Windows 10+ · Linux x86_64 · Nintendo Switch</p>
       </div>
 
       <div class="sunbox" aria-hidden="true">
@@ -221,6 +239,28 @@ footer a { color: var(--ink); }
         </svg>
       </div>
     </div>
+
+    <div class="scan" aria-hidden="true"><i></i><i></i><i></i></div>
+
+    <section id="telas">
+      <div class="head">
+        <p class="eyebrow">Telas</p>
+        <h2>Veja o Lumen por dentro</h2>
+        <p>Início com destaques e continuar assistindo, filmes por categoria, séries com temporadas, ao vivo com guia e o player.</p>
+      </div>
+      <div class="shots">
+        <figure class="screen"><img id="shot" src="telas/home.webp" width="1440" height="880" alt="Tela inicial do Lumen com um filme em destaque e a fileira Continuar assistindo"></figure>
+        <p class="caption" id="shot-caption">Início: destaques da sua lista e o que você parou de ver.</p>
+        <div class="thumbs" role="group" aria-label="Escolher tela">
+          <button class="thumb" aria-pressed="true" data-src="telas/home.webp" data-alt="Tela inicial do Lumen com um filme em destaque e a fileira Continuar assistindo" data-caption="Início: destaques da sua lista e o que você parou de ver."><img src="telas/home.webp" alt="" loading="lazy"><span>Início</span></button>
+          <button class="thumb" aria-pressed="false" data-src="telas/movies.webp" data-alt="Grade de filmes com capas, notas e categorias" data-caption="Filmes: capas, notas e as categorias da sua lista, com busca e ordenação."><img src="telas/movies.webp" alt="" loading="lazy"><span>Filmes</span></button>
+          <button class="thumb" aria-pressed="false" data-src="telas/detail.webp" data-alt="Página de uma série com temporadas e episódios" data-caption="Séries: temporadas e episódios, retomando de onde você parou."><img src="telas/detail.webp" alt="" loading="lazy"><span>Séries</span></button>
+          <button class="thumb" aria-pressed="false" data-src="telas/live.webp" data-alt="Lista de canais ao vivo com prévia do vídeo e guia de programação" data-caption="Ao vivo: canais com prévia, o que passa agora e a seguir, e a categoria Recentes."><img src="telas/live.webp" alt="" loading="lazy"><span>Ao vivo</span></button>
+          <button class="thumb" aria-pressed="false" data-src="telas/player.webp" data-alt="Player do Lumen tocando um filme em tela cheia" data-caption="Player: avanço de 10 s, legendas, faixas de áudio, enquadramento e mini player."><img src="telas/player.webp" alt="" loading="lazy"><span>Player</span></button>
+        </div>
+        <p class="credit">Telas com conteúdo de exemplo: filmes abertos da <a href="https://studio.blender.org/films/" target="_blank" rel="noopener">Blender Foundation e Blender Studio</a> (CC BY) e canais fictícios. O Lumen não inclui nenhum conteúdo.</p>
+      </div>
+    </section>
 
     <div class="scan" aria-hidden="true"><i></i><i></i><i></i></div>
 
@@ -297,6 +337,18 @@ footer a { color: var(--ink); }
           <code>Lumen-x86_64.AppImage</code>
           <span class="arrow" aria-hidden="true">↓</span>
         </a>
+        <a class="file" href="https://github.com/jesieldotdev/lumen/releases/latest/download/Lumen-switch.nro">
+          <b>Nintendo Switch</b>
+          <span>Homebrew. Copie para sdmc:/switch/lumen/lumen.nro</span>
+          <code>Lumen-switch.nro</code>
+          <span class="arrow" aria-hidden="true">↓</span>
+        </a>
+        <a class="file" href="https://github.com/jesieldotdev/lumen/releases/latest/download/Lumen-switch-atalho.nsp">
+          <b>Switch: atalho na tela inicial</b>
+          <span>Opcional. Abre o .nro acima direto do menu do console</span>
+          <code>Lumen-switch-atalho.nsp</code>
+          <span class="arrow" aria-hidden="true">↓</span>
+        </a>
       </div>
       <p class="note">No Android, permita “instalar apps desconhecidos” para o navegador ou gerenciador de arquivos. Todas as versões: <a href="https://github.com/jesieldotdev/lumen/releases" target="_blank" rel="noopener">github.com/jesieldotdev/lumen/releases</a>.</p>
     </section>
@@ -361,5 +413,16 @@ footer a { color: var(--ink); }
     </symbol>
   </defs>
 </svg>
+<script>
+(function () {
+  var main = document.getElementById("shot"), cap = document.getElementById("shot-caption");
+  document.querySelectorAll(".thumb").forEach(function (b) {
+    b.addEventListener("click", function () {
+      document.querySelectorAll(".thumb").forEach(function (o) { o.setAttribute("aria-pressed", o === b ? "true" : "false"); });
+      main.src = b.dataset.src; main.alt = b.dataset.alt; cap.textContent = b.dataset.caption;
+    });
+  });
+})();
+</script>
 </body>
 </html>
