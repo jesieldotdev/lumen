@@ -1,0 +1,329 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<title>Lumen</title>
+<meta name="description" content="Lumen: player IPTV para listas Xtream Codes no Android, TV box, Windows e Linux.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700&family=Figtree:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Layout: noite → nascer do sol. Hero com o sol cortado pelas linhas de TV, depois faixas horizontais como scanlines. Visual único escuro, por escolha. */
+:root {
+  --night: #0d1233;
+  --dusk: #1a0f2e;
+  --ink: #f4ecf7;
+  --muted: #a99fc4;
+  --line: rgba(244, 236, 247, 0.12);
+  --sun-hi: #ffe08a;
+  --sun: #ff9a4d;
+  --rose: #ff4f6d;
+  --chip: rgba(255, 154, 77, 0.12);
+  --display: "Unbounded", "Trebuchet MS", system-ui, sans-serif;
+  --body: "Figtree", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Consolas, monospace;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { margin: 0; }
+img { max-width: 100%; }
+html { scroll-behavior: smooth; }
+html { background: var(--night); }
+body {
+  background: linear-gradient(180deg, var(--night) 0%, var(--dusk) 55%, var(--night) 100%);
+  color: var(--ink);
+  font: 400 1.0625rem/1.6 var(--body);
+  -webkit-font-smoothing: antialiased;
+}
+.wrap { max-width: 68rem; margin: 0 auto; padding-inline: clamp(16px, 4vw, 40px); }
+a { color: inherit; }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--sun-hi); outline-offset: 3px; border-radius: 8px; }
+h1, h2, h3 { font-family: var(--display); font-weight: 700; text-wrap: balance; margin: 0; line-height: 1.12; letter-spacing: -0.01em; }
+p { margin: 0; }
+.eyebrow { font: 500 0.75rem/1 var(--mono); letter-spacing: 0.14em; text-transform: uppercase; color: var(--sun); }
+
+/* topo */
+.top { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 22px; }
+.brand { display: flex; align-items: center; gap: 10px; font: 700 1.05rem/1 var(--display); text-decoration: none; }
+.brand svg { width: 34px; height: 34px; }
+.top nav { display: flex; gap: 22px; font-size: 0.95rem; color: var(--muted); }
+.top nav a { text-decoration: none; }
+.top nav a:hover { color: var(--ink); }
+
+/* hero */
+.hero { display: grid; grid-template-columns: 1.05fr 0.95fr; align-items: center; gap: clamp(24px, 5vw, 64px); padding-block: clamp(28px, 6vw, 72px) clamp(40px, 7vw, 88px); }
+.hero > * { min-width: 0; }
+.hero h1 { font-size: clamp(2.3rem, 5.6vw, 4.2rem); margin-block: 18px 22px; }
+.hero h1 em { font-style: normal; background: linear-gradient(100deg, var(--sun-hi), var(--sun) 45%, var(--rose)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.lede { color: var(--muted); font-size: 1.15rem; max-width: 34rem; }
+.cta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
+.btn { display: inline-flex; align-items: center; gap: 10px; padding: 14px 22px; border-radius: 999px; font-weight: 600; text-decoration: none; transition: transform .15s ease, background .15s ease; }
+.btn.primary { background: linear-gradient(100deg, var(--sun-hi), var(--sun) 50%, var(--rose)); color: var(--night); }
+.btn.ghost { border: 1px solid var(--line); color: var(--ink); }
+.btn:hover { transform: translateY(-2px); }
+.btn.ghost:hover { background: var(--chip); }
+.ver { margin-top: 18px; font: 500 0.8rem/1.4 var(--mono); color: var(--muted); }
+
+.sunbox { position: relative; aspect-ratio: 1; max-width: 100%; width: min(100%, 460px); justify-self: center; }
+.sunbox svg { width: 100%; height: 100%; display: block; overflow: visible; }
+.sun-disc { transform-origin: 50% 60%; animation: rise 1.6s cubic-bezier(.2,.7,.2,1) both; }
+@keyframes rise { from { transform: translateY(14%); } to { transform: none; } }
+@media (prefers-reduced-motion: reduce) { .sun-disc { animation: none; } .btn { transition: none; } }
+
+/* scanline divisor */
+.scan { display: grid; gap: 6px; padding-block: 8px; }
+.scan i { display: block; height: 2px; background: var(--line); }
+.scan i:nth-child(2) { height: 4px; opacity: .7; }
+.scan i:nth-child(3) { height: 7px; opacity: .45; }
+
+section { padding-block: clamp(48px, 8vw, 96px); }
+.head { display: grid; gap: 14px; margin-bottom: 40px; max-width: 40rem; }
+.head h2 { font-size: clamp(1.7rem, 3.6vw, 2.5rem); }
+.head p { color: var(--muted); }
+
+/* recursos */
+.feats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 20px; overflow: hidden; }
+.feat { background: var(--dusk); padding: 28px 26px 30px; display: grid; gap: 10px; align-content: start; }
+.feat h3 { font-size: 1.05rem; font-weight: 500; }
+.feat p { color: var(--muted); font-size: 0.98rem; }
+.feat .tag { font: 500 0.72rem/1 var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--sun); }
+
+/* downloads */
+.dl { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+.file { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 6px 18px; padding: 22px 24px; border: 1px solid var(--line); border-radius: 16px; text-decoration: none; transition: border-color .15s ease, background .15s ease; }
+.file:hover { border-color: var(--sun); background: var(--chip); }
+.file b { font: 500 1.05rem/1.3 var(--display); }
+.file span { grid-column: 1; color: var(--muted); font-size: 0.93rem; }
+.file code { grid-column: 1; font: 500 0.8rem/1.3 var(--mono); color: var(--sun-hi); overflow-wrap: anywhere; }
+.file .arrow { grid-column: 2; grid-row: 1 / span 3; width: 42px; height: 42px; border-radius: 50%; display: grid; place-items: center; background: var(--chip); color: var(--sun); font-size: 1.2rem; }
+.note { margin-top: 18px; color: var(--muted); font-size: 0.93rem; }
+.note a { color: var(--sun-hi); }
+.soon { opacity: .75; }
+.soon:hover { border-color: var(--line); background: none; }
+
+/* atalhos */
+.keys-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(24px, 5vw, 64px); align-items: start; }
+.keys-grid > * { min-width: 0; }
+.keys { width: 100%; border-collapse: collapse; font-size: 0.97rem; }
+.keys td { padding: 11px 0; border-bottom: 1px solid var(--line); vertical-align: top; }
+.keys td:first-child { width: 44%; padding-right: 14px; }
+kbd { display: inline-block; min-width: 1.9em; text-align: center; padding: 3px 8px; margin: 0 3px 3px 0; border: 1px solid var(--line); border-bottom-width: 3px; border-radius: 7px; font: 500 0.78rem/1.3 var(--mono); color: var(--ink); background: rgba(255,255,255,0.04); }
+.keys td:last-child { color: var(--muted); }
+
+/* aviso */
+.legal { border: 1px solid var(--line); border-radius: 20px; padding: clamp(24px, 4vw, 40px); display: grid; gap: 12px; max-width: 46rem; }
+.legal h2 { font-size: 1.3rem; }
+.legal p { color: var(--muted); }
+
+footer { padding-block: 40px 56px; color: var(--muted); font-size: 0.9rem; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; border-top: 1px solid var(--line); }
+footer a { color: var(--ink); }
+
+@media (max-width: 860px) {
+  .hero, .keys-grid { grid-template-columns: 1fr; }
+  .sunbox { order: -1; width: min(70%, 320px); }
+  .feats { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 560px) {
+  .feats, .dl { grid-template-columns: 1fr; }
+  .top nav { display: none; }
+  .btn { width: 100%; justify-content: center; }
+}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="top">
+    <a class="brand" href="#inicio" aria-label="Lumen">
+      <svg viewBox="0 0 1024 1024" aria-hidden="true"><use href="#lumen-icon"/></svg>
+      Lumen
+    </a>
+    <nav aria-label="Seções">
+      <a href="#recursos">Recursos</a>
+      <a href="#baixar">Baixar</a>
+      <a href="#atalhos">Atalhos</a>
+    </nav>
+  </header>
+
+  <main id="inicio">
+    <div class="hero">
+      <div>
+        <p class="eyebrow">Player IPTV · Xtream Codes</p>
+        <h1>Sua lista IPTV com cara de <em>streaming</em>.</h1>
+        <p class="lede">Canais ao vivo com guia de programação, filmes e séries com capa, sinopse e “continuar assistindo”. No celular, na TV box e no computador.</p>
+        <div class="cta">
+          <a class="btn primary" href="#baixar">Baixar o Lumen</a>
+          <a class="btn ghost" href="https://github.com/jesieldotdev/lumen/releases/latest" target="_blank" rel="noopener">Ver novidades</a>
+        </div>
+        <p class="ver">v0.2.2 · Android 9+ · Windows 10+ · Linux x86_64</p>
+      </div>
+
+      <div class="sunbox" aria-hidden="true">
+        <svg viewBox="0 0 1024 1024">
+          <defs>
+            <linearGradient id="h-sun" x1="0.2" y1="0" x2="0.8" y2="1">
+              <stop offset="0" stop-color="#ffe08a"/><stop offset="0.5" stop-color="#ff9a4d"/><stop offset="1" stop-color="#ff4f6d"/>
+            </linearGradient>
+            <filter id="h-glow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="70"/></filter>
+            <clipPath id="h-cut"><rect x="0" y="0" width="1024" height="820"/></clipPath>
+          </defs>
+          <g clip-path="url(#h-cut)">
+            <g class="sun-disc">
+              <circle cx="512" cy="500" r="330" fill="#ff8a4d" opacity="0.5" filter="url(#h-glow)"/>
+              <circle cx="512" cy="500" r="300" fill="url(#h-sun)"/>
+              <path d="M452 370 C452 345 478 330 500 343 L642 428 C663 441 663 470 642 482 L500 567 C478 580 452 565 452 540 Z" fill="#14112e"/>
+            </g>
+          </g>
+          <g fill="#1a0f2e">
+            <rect x="120" y="640" width="784" height="20"/>
+            <rect x="120" y="690" width="784" height="28"/>
+            <rect x="120" y="748" width="784" height="40"/>
+            <rect x="0" y="788" width="1024" height="236"/>
+          </g>
+        </svg>
+      </div>
+    </div>
+
+    <div class="scan" aria-hidden="true"><i></i><i></i><i></i></div>
+
+    <section id="recursos">
+      <div class="head">
+        <p class="eyebrow">Recursos</p>
+        <h2>Você entra com a sua assinatura. O Lumen organiza o resto.</h2>
+        <p>Servidor, usuário e senha da sua lista Xtream Codes. Em segundos, tudo vira prateleiras navegáveis no mouse, no toque ou no controle remoto.</p>
+      </div>
+      <div class="feats">
+        <article class="feat">
+          <p class="tag">Ao vivo</p>
+          <h3>Canais com guia de programação</h3>
+          <p>Veja o que passa agora e a seguir. Troque de canal com as setas sem sair do player.</p>
+        </article>
+        <article class="feat">
+          <p class="tag">Filmes</p>
+          <h3>Capas, sinopse e elenco</h3>
+          <p>Busca por título e categorias da sua lista, com página de detalhes antes de dar play.</p>
+        </article>
+        <article class="feat">
+          <p class="tag">Séries</p>
+          <h3>Temporadas e próximo episódio</h3>
+          <p>Retome de onde parou. Ao fim de um episódio, o próximo está a um botão.</p>
+        </article>
+        <article class="feat">
+          <p class="tag">Nuvem</p>
+          <h3>Favoritos em todos os aparelhos</h3>
+          <p>Entre com o Google e o progresso e os favoritos acompanham você do celular à TV.</p>
+        </article>
+        <article class="feat">
+          <p class="tag">TV</p>
+          <h3>Login por QR code</h3>
+          <p>Na TV box, aponte a câmera do celular para o QR em vez de digitar senha no controle.</p>
+        </article>
+        <article class="feat">
+          <p class="tag">Visual</p>
+          <h3>Tema e cor de destaque</h3>
+          <p>Claro ou escuro, com a cor que você escolher. Player com legendas e ajuste de preto.</p>
+        </article>
+      </div>
+    </section>
+
+    <div class="scan" aria-hidden="true"><i></i><i></i><i></i></div>
+
+    <section id="baixar">
+      <div class="head">
+        <p class="eyebrow">Baixar · v0.2.2</p>
+        <h2>Escolha o arquivo do seu aparelho</h2>
+        <p>Grátis. Os instaladores ficam nas releases do GitHub.</p>
+      </div>
+      <div class="dl">
+        <a class="file" href="https://github.com/jesieldotdev/lumen/releases/latest/download/Lumen-arm64-v8a.apk">
+          <b>Celular e TV box</b>
+          <span>Android 9 ou mais novo, 64 bits</span>
+          <code>Lumen-arm64-v8a.apk</code>
+          <span class="arrow" aria-hidden="true">↓</span>
+        </a>
+        <a class="file" href="https://github.com/jesieldotdev/lumen/releases/latest/download/Lumen-armeabi-v7a.apk">
+          <b>TV box 32 bits</b>
+          <span>Se o de 64 bits não instalar</span>
+          <code>Lumen-armeabi-v7a.apk</code>
+          <span class="arrow" aria-hidden="true">↓</span>
+        </a>
+        <a class="file" href="https://github.com/jesieldotdev/lumen/releases/latest/download/Lumen-windows-x64.zip">
+          <b>Windows</b>
+          <span>Windows 10+. Descompacte e abra o Lumen.exe</span>
+          <code>Lumen-windows-x64.zip</code>
+          <span class="arrow" aria-hidden="true">↓</span>
+        </a>
+        <a class="file" href="https://github.com/jesieldotdev/lumen/releases/latest/download/Lumen-x86_64.AppImage">
+          <b>Linux</b>
+          <span>x86_64. Dê permissão de execução e abra</span>
+          <code>Lumen-x86_64.AppImage</code>
+          <span class="arrow" aria-hidden="true">↓</span>
+        </a>
+      </div>
+      <p class="note">No Android, permita “instalar apps desconhecidos” para o navegador ou gerenciador de arquivos. Todas as versões: <a href="https://github.com/jesieldotdev/lumen/releases" target="_blank" rel="noopener">github.com/jesieldotdev/lumen/releases</a>.</p>
+    </section>
+
+    <div class="scan" aria-hidden="true"><i></i><i></i><i></i></div>
+
+    <section id="atalhos">
+      <div class="keys-grid">
+        <div class="head">
+          <p class="eyebrow">No computador</p>
+          <h2>Tudo no teclado, como num controle remoto</h2>
+          <p>No player, as mesmas teclas valem para filmes, séries e canais ao vivo. No ao vivo, as setas laterais trocam de canal em vez de avançar.</p>
+          <p>Tocar e segurar uma capa, ou clicar com o botão direito, favorita ou desfavorita.</p>
+        </div>
+        <div style="overflow-x:auto">
+          <table class="keys">
+            <tbody>
+              <tr><td><kbd>Espaço</kbd></td><td>Pausar e continuar</td></tr>
+              <tr><td><kbd>←</kbd><kbd>→</kbd></td><td>Voltar ou avançar 10 s</td></tr>
+              <tr><td><kbd>PgUp</kbd><kbd>PgDn</kbd></td><td>Canal anterior ou próximo</td></tr>
+              <tr><td><kbd>↑</kbd><kbd>↓</kbd></td><td>Volume</td></tr>
+              <tr><td><kbd>L</kbd></td><td>Lista de canais</td></tr>
+              <tr><td><kbd>E</kbd> <kbd>N</kbd></td><td>Episódios e próximo episódio</td></tr>
+              <tr><td><kbd>C</kbd></td><td>Liga ou desliga a legenda</td></tr>
+              <tr><td><kbd>F</kbd> <kbd>Esc</kbd></td><td>Tela cheia e voltar</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="legal">
+        <p class="eyebrow">Aviso</p>
+        <h2>O Lumen é só o player</h2>
+        <p>Ele não vende, não inclui e não indica canais, filmes ou listas. Você usa o servidor, o usuário e a senha da assinatura IPTV que já tem, de um provedor autorizado a distribuir o conteúdo.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <span>Lumen v0.2.2</span>
+    <span>Feito por <a href="https://github.com/jesieldotdev" target="_blank" rel="noopener">jesieldotdev</a></span>
+  </footer>
+</div>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <linearGradient id="i-bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0d1233"/><stop offset="1" stop-color="#1a0f2e"/></linearGradient>
+    <linearGradient id="i-sun" x1="0.2" y1="0" x2="0.8" y2="1"><stop offset="0" stop-color="#ffe08a"/><stop offset="0.5" stop-color="#ff9a4d"/><stop offset="1" stop-color="#ff4f6d"/></linearGradient>
+    <clipPath id="i-round"><rect x="48" y="48" width="928" height="928" rx="208"/></clipPath>
+    <symbol id="lumen-icon" viewBox="0 0 1024 1024">
+      <g clip-path="url(#i-round)">
+        <g transform="translate(48 48) scale(0.90625)">
+          <rect width="1024" height="1024" fill="url(#i-bg)"/>
+          <circle cx="512" cy="500" r="290" fill="url(#i-sun)"/>
+          <g fill="#1a0f2e"><rect x="180" y="640" width="664" height="20"/><rect x="180" y="690" width="664" height="28"/><rect x="180" y="748" width="664" height="40"/></g>
+          <path d="M452 370 C452 345 478 330 500 343 L642 428 C663 441 663 470 642 482 L500 567 C478 580 452 565 452 540 Z" fill="#14112e"/>
+        </g>
+      </g>
+      <rect x="50" y="50" width="924" height="924" rx="206" fill="none" stroke="#ffffff" stroke-opacity="0.12" stroke-width="6"/>
+    </symbol>
+  </defs>
+</svg>
+</body>
+</html>

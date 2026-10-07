@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
+  <!-- Ícone do Lumen ("Sol"): sol nascente com linhas de TV e o play vazado.
+       Quadrado arredondado; a versão sem bordas fica em packaging/icon-full.svg. -->
+  <defs>
+    <linearGradient id="sbg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0d1233"/>
+      <stop offset="1" stop-color="#1a0f2e"/>
+    </linearGradient>
+    <linearGradient id="ssun" x1="0.2" y1="0" x2="0.8" y2="1">
+      <stop offset="0" stop-color="#ffe08a"/>
+      <stop offset="0.5" stop-color="#ff9a4d"/>
+      <stop offset="1" stop-color="#ff4f6d"/>
+    </linearGradient>
+    <filter id="sglow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="60"/></filter>
+    <clipPath id="scut"><rect x="0" y="0" width="1024" height="1024"/></clipPath>
+  
+    <clipPath id="round"><rect x="48" y="48" width="928" height="928" rx="208"/></clipPath>
+  </defs>
+  <g clip-path="url(#round)">
+    <g transform="translate(48 48) scale(0.90625)">
+      <rect width="1024" height="1024" fill="url(#sbg)"/>
+  <circle cx="512" cy="500" r="300" fill="#ff8a4d" opacity="0.55" filter="url(#sglow)"/>
+  <circle cx="512" cy="500" r="290" fill="url(#ssun)"/>
+  
+  <g fill="url(#sbg)">
+    <rect x="180" y="640" width="664" height="20"/>
+    <rect x="180" y="690" width="664" height="28"/>
+    <rect x="180" y="748" width="664" height="40"/>
+  </g>
+  
+  <path d="M452 370 C452 345 478 330 500 343 L642 428 C663 441 663 470 642 482 L500 567 C478 580 452 565 452 540 Z" fill="#14112e"/>
+    </g>
+  </g>
+  <rect x="50" y="50" width="924" height="924" rx="206" fill="none" stroke="#ffffff" stroke-opacity="0.08" stroke-width="4"/>
+</svg>
